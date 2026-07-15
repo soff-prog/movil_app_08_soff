@@ -46,6 +46,8 @@ Debes implementar un sistema de navegación (puede ser simple con estados o usan
 *   **El Reto de la FK:** Debe haber un campo (input numérico o dropdown) para seleccionar el **ID del Hechicero**.
 *   **Validación (Integridad Referencial):** Si el estudiante ingresa un ID de hechicero que no existe en el "estado" de la app, el sistema **debe rechazar** la creación del hechizo y mostrar un error: *"Error: El hechicero no existe"*.
 
+cuando se presione el hechicero debe mostrase los hechizos de este
+
 ### 3. Ventana: `ListaHechicero` (El Tablero)
 *   **Función:** Mostrar un `FlatList` con todos los hechiceros registrados.
 *   **UI:** Cada item debe mostrar el Nombre, Nivel y un botón que diga **"Ir a la Arena"**.

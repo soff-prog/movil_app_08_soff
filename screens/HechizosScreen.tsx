@@ -1,14 +1,29 @@
 import { Button, ImageBackground, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { globalStyles } from '../styles/EstilosGloables'
+import { supabase } from '../supabase/config'
 
 export default function HechizoScreen() {
 
   const [id, setId] = useState('')
   const [nombre, setNombre] = useState('')
-  const [costoMana, setCostoMana] = useState('')
-  const [danioBase, setDanioBase] = useState('')
+  const [costoMana, setCostoMana] = useState(0)
+  const [danioBase, setDanioBase] = useState(0)
    const [idHechicero, setIdHechicero] = useState('')
+
+   async function guardarHechizo(){
+     const { error } = await supabase
+          .from('hechizo')
+          .insert({ 
+            id: id, 
+            nombre: nombre,
+            costoMana: costoMana,
+            danioBase: danioBase,
+            idHechicero: idHechicero
+          })
+    
+          console.log(error);
+   }
 
   return (
     <ImageBackground source={require('../assets/images/hechicero2.jpg')} style={ globalStyles.container }>
@@ -30,15 +45,15 @@ export default function HechizoScreen() {
       <TextInput
         placeholder="Costo de maná"
         style={ globalStyles.inputHechizo }
-        value={costoMana}
-        onChangeText={setCostoMana}
+        value={costoMana.toString()}
+        onChangeText={(text)=> setCostoMana(+text)}
       />
 
       <TextInput
         placeholder="Daño base"
         style={ globalStyles.inputHechizo }
-        value={danioBase}
-        onChangeText={setDanioBase}
+        value={danioBase.toString()}
+        onChangeText={(text)=> setDanioBase(+text)}
       />
 
       <TextInput
@@ -48,7 +63,11 @@ export default function HechizoScreen() {
         onChangeText={setIdHechicero}
       />
 
-      <Button title='Guardar' color='green'/>
+      <Button 
+        title='Guardar' 
+        color='green'
+        onPress={guardarHechizo}
+      />
     </ImageBackground>
   )
 }
