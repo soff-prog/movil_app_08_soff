@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, ImageBackground, FlatList } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { globalStyles } from '../styles/EstilosGloables'
 import { supabase } from '../supabase/config'
+import CardHechicero from '../components/CardHechicero';
+import { Hechicero } from '../types/tipos';
 
 export default function ListaHechicerosScreen() {
 
-  const [hechiceros, sethechicero] = useState([])
+  const [hechiceros, sethechicero] = useState<Hechicero[]>([])
 
   useEffect(() => {
     leerHechicero()
@@ -17,10 +19,7 @@ export default function ListaHechicerosScreen() {
       .from('hechicero')
       .select()
 
-    sethechicero(data as any);
-
-    console.log(hechiceros);
-
+    sethechicero(data as Hechicero[]);
   }
 
   return (
@@ -29,10 +28,13 @@ export default function ListaHechicerosScreen() {
       <FlatList
         data={hechiceros}
         renderItem={({item})=>
-          <Text style={{fontSize:30, color: "#06020f"}}>{item.nombre}</Text>
+          <CardHechicero
+            datos={item}
+          />
         }
       />
     </ImageBackground>
+    
   )
 }
 
